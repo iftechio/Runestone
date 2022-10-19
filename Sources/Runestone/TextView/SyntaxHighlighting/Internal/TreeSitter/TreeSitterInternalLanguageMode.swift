@@ -117,6 +117,14 @@ final class TreeSitterInternalLanguageMode: InternalLanguageMode {
         }
     }
 
+    func treeSitterNode(at linePosition: LinePosition) -> TSNodeExport? {
+        if let node = rootLanguageLayer.layerAndNode(at: linePosition)?.node,
+           node.type != nil {
+            return node
+        }
+        return nil
+    }
+
     func detectIndentStrategy() -> DetectedIndentStrategy {
         if let tree = rootLanguageLayer.tree {
             let detector = TreeSitterIndentStrategyDetector(lineManager: lineManager, tree: tree, stringView: stringView)

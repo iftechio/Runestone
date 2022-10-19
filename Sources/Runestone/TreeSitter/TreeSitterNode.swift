@@ -1,5 +1,48 @@
 import TreeSitter
 
+public protocol TSNodeExport: AnyObject {
+    var expressionString: String? { get }
+    var type: String? { get }
+
+    var startLocation: TextLocation { get }
+    var endLocation: TextLocation { get }
+
+    var parentNode: TSNodeExport? { get }
+    var previousSiblingNode: TSNodeExport? { get }
+    var nextSiblingNode: TSNodeExport? { get }
+    var childNodeCount: Int { get }
+    func childNode(at index: Int) -> TSNodeExport?
+}
+
+extension TreeSitterNode: TSNodeExport {
+    var parentNode: TSNodeExport? {
+        parent
+    }
+
+    var previousSiblingNode: TSNodeExport? {
+        previousSibling
+    }
+
+    var nextSiblingNode: TSNodeExport? {
+        nextSibling
+    }
+
+    var childNodeCount: Int {
+        childCount
+    }
+
+    func childNode(at index: Int) -> TSNodeExport? {
+        child(at: index)
+    }
+
+    var startLocation: TextLocation {
+        TextLocation(LinePosition(startPoint))
+    }
+    var endLocation: TextLocation {
+        TextLocation(LinePosition(endPoint))
+    }
+}
+
 final class TreeSitterNode {
     let rawValue: TSNode
     var expressionString: String? {

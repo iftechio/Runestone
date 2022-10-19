@@ -831,6 +831,14 @@ final class TextInputView: UIView, UITextInput {
         }
     }
 
+    func treeSitterNode(at location: Int) -> TSNodeExport? {
+        if let linePosition = lineManager.linePosition(at: location),
+           let treeSitterLanguageMode = languageMode as? TreeSitterInternalLanguageMode {
+            return treeSitterLanguageMode.treeSitterNode(at: linePosition)
+        }
+        return nil
+    }
+
     func isIndentation(at location: Int) -> Bool {
         guard let line = lineManager.line(containingCharacterAt: location) else {
             return false

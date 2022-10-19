@@ -819,6 +819,10 @@ open class TextView: UIScrollView {
         return textInputView.syntaxNode(at: location)
     }
 
+    public func treeSitterNode(at location: Int) -> TSNodeExport? {
+        return textInputView.treeSitterNode(at: location)
+    }
+
     /// Checks if the specified locations is within the indentation of the line.
     ///
     /// - Parameter location: A location in the document.
